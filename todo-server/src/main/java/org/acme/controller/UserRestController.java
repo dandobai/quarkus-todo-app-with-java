@@ -1,6 +1,7 @@
 package org.acme.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.acme.model.User;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.inject.Inject;
@@ -10,13 +11,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import org.acme.model.Todo;
 import org.acme.service.UserService;
 import org.jboss.logging.Logger;
 
 import java.util.List;
 
 @Path("/todos/")
+@ApplicationScoped
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class UserRestController {
     private static final Logger LOGGER = Logger.getLogger(TodoRestController.class.getName());
 
@@ -57,7 +60,6 @@ public class UserRestController {
 
     @GET
     @Path("/bello")
-    @Produces(MediaType.APPLICATION_JSON)
     public String hello() {
         return "Hello from RESTEasy Reactive";
     }
