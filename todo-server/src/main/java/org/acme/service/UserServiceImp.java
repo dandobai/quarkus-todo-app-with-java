@@ -16,18 +16,18 @@ public class UserServiceImp implements UserService{
     EntityManager entityManager;
 
     @Override
-    public List<User> getUsers() {
-        return entityManager.createNamedQuery("User.findAll", User.class)
-                .getResultList();
+    public Response getUsers() {
+        return Response.ok(entityManager.createNamedQuery("Users.findAll", User.class)
+                .getResultList()).build();
     }
 
     @Override
-    public User getUserById(Integer id) {
+    public Response getUserById(Integer id) {
         User entity = entityManager.find(User.class, id);
         if (entity == null) {
             throw new WebApplicationException("User with id of " + id + " does not exist.", 404);
         }
-        return entity;
+        return Response.ok(entity).build();
     }
 
     @Override

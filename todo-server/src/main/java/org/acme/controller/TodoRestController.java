@@ -38,13 +38,13 @@ public class TodoRestController {
 
     @GET
     @Path("get")
-    public List<Todo> get() {
+    public Response get() {
         return todoService.getTodos();
     }
 
     @GET
     @Path("{id}")
-    public Todo getSingle(Integer id) {
+    public Response getSingle(Integer id) {
         return todoService.getTodoById(id);
     }
 
@@ -69,10 +69,9 @@ public class TodoRestController {
     }
     
     @GET
-    @Path("/bello")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String hello() {
-        return "Hello from RESTEasy Reactive";
+    @Path("/hellobello")
+    public Response helloBello() {
+        return Response.ok("This is the Todo controller").build();
     }
 
 

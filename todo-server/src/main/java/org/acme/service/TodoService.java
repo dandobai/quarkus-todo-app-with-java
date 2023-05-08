@@ -6,9 +6,9 @@ import org.acme.model.Todo;
 import java.util.List;
 
 public interface TodoService {
-    List<Todo> getTodos();
+    Response getTodos();
 
-    Todo getTodoById(Integer id);
+    Response getTodoById(Integer id);
 
     Response createTodo(Todo todo);
 

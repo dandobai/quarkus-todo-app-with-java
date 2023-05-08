@@ -7,9 +7,9 @@ import org.acme.model.Todo;
 import java.util.List;
 
 public interface UserService {
-    List<User> getUsers();
+    Response getUsers();
 
-    User getUserById(Integer id);
+    Response getUserById(Integer id);
 
     Response createUser(User user);
 

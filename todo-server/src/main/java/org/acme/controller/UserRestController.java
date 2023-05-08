@@ -16,7 +16,7 @@ import org.jboss.logging.Logger;
 
 import java.util.List;
 
-@Path("/todos/")
+@Path("/users/")
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -28,13 +28,13 @@ public class UserRestController {
 
     @GET
     @Path("get")
-    public List<User> get() {
+    public Response get() {
         return userService.getUsers();
     }
 
     @GET
     @Path("{id}")
-    public User getSingle(Integer id) {
+    public Response getSingle(Integer id) {
         return userService.getUserById(id);
     }
 
@@ -59,9 +59,9 @@ public class UserRestController {
     }
 
     @GET
-    @Path("/bello")
-    public String hello() {
-        return "Hello from RESTEasy Reactive";
+    @Path("/hellobello")
+    public Response helloBello() {
+        return Response.ok("This is the User controller").build();
     }
 
 

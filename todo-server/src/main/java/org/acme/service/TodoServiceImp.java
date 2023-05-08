@@ -16,18 +16,18 @@ public class TodoServiceImp implements TodoService {
     EntityManager entityManager;
 
     @Override
-    public List<Todo> getTodos() {
-        return entityManager.createNamedQuery("Todo.findAll", Todo.class)
-                .getResultList();
+    public Response getTodos() {
+        return Response.ok(entityManager.createNamedQuery("Todos.findAll", Todo.class)
+                .getResultList()).build();
     }
 
     @Override
-    public Todo getTodoById(Integer id) {
+    public Response getTodoById(Integer id) {
         Todo entity = entityManager.find(Todo.class, id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
         }
-        return entity;
+        return Response.ok(entity).build();
     }
 
     @Override

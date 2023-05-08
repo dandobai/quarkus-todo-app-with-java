@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NamedQuery(name = "Users.findAll", query = "SELECT f FROM Fruit f ORDER BY f.name", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
+@NamedQuery(name = "Users.findAll", query = "SELECT u FROM User u ORDER BY u.userName", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
 @Cacheable
 @Table(name = "users")
 public class User {
