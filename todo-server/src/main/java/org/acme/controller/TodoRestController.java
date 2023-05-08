@@ -20,6 +20,7 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 import org.acme.model.Todo;
+import org.acme.service.TodoService;
 import org.jboss.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,64 +31,38 @@ public class TodoRestController {
     private static final Logger LOGGER = Logger.getLogger(TodoRestController.class.getName());
 
     @Inject
-    EntityManager entityManager;
+    TodoService  todoService;
 
     @GET
+    @Path("get")
     public List<Todo> get() {
-        return entityManager.createNamedQuery("Todo.findAll", Todo.class)
-                .getResultList();
+        return todoService.getTodos();
     }
 
     @GET
     @Path("{id}")
     public Todo getSingle(Integer id) {
-        Todo entity = entityManager.find(Todo.class, id);
-        if (entity == null) {
-            throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
-        }
-        return entity;
+        return todoService.getTodoById(id);
     }
 
     @POST
     @Transactional
     public Response create(Todo todo) {
-        if (todo.getId() != null) {
-            throw new WebApplicationException("Id was invalidly set on request.", 422);
-        }
-
-        entityManager.persist(todo);
-        return Response.ok(todo).status(201).build();
+        return todoService.createTodo(todo);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Todo update(Integer id, Todo todo) {
-        if (todo.getName() == null) {
-            throw new WebApplicationException("Fruit Name was not set on request.", 422);
-        }
-
-        Todo entity = entityManager.find(Todo.class, id);
-
-        if (entity == null) {
-            throw new WebApplicationException("Fruit with id of " + id + " does not exist.", 404);
-        }
-
-        entity.setName(todo.getName());
-
-        return entity;
+    public Response update(Integer id, Todo todo) {
+        return todoService.updateTodo(todo,id);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public Response delete(Integer id) {
-        Todo entity = entityManager.getReference(Todo.class, id);
-        if (entity == null) {
-            throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
-        }
-        entityManager.remove(entity);
-        return Response.status(204).build();
+        return todoService.deleteTodo(id);
     }
     
     @GET
