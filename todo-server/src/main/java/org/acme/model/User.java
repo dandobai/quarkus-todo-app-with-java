@@ -10,7 +10,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long userId;
+    Long userId;
     String userName;
     @OneToMany
     List<Todo> todos;
@@ -24,11 +24,11 @@ public class User {
         this.userName = userName;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
