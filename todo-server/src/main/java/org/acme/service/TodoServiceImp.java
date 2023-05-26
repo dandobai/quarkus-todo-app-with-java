@@ -1,6 +1,5 @@
 package org.acme.service;
 
-import org.acme.model.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -11,59 +10,59 @@ import org.acme.model.Todo;
 import java.util.List;
 
 @ApplicationScoped
-public class UserServiceImp implements UserService{
+public class TodoServiceImp implements TodoService {
 
     @Inject
     EntityManager entityManager;
 
     @Override
-    public List<User> getUsers() {
-        return entityManager.createNamedQuery("Users.findAll", User.class).getResultList();
+    public List<Todo> getTodos() {
+        return entityManager.createNamedQuery("Todos.findAll", Todo.class).getResultList();
     }
 
     @Override
-    public User getUserById(Integer id) {
-        User entity = entityManager.find(User.class, id);
+    public Todo getTodoById(Integer id) {
+        Todo entity = entityManager.find(Todo.class, id);
         if (entity == null) {
-            throw new WebApplicationException("User with id of " + id + " does not exist.", 404);
+            throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
         }
         return entity;
     }
 
     @Override
-    public String createUser(User user) {
-        if (user.getUserId() != null) {
+    public String createTodo(Todo todo) {
+        if (todo.getId() != null) {
             throw new WebApplicationException("Id was invalidly set on request.", 422);
         }
 
-        entityManager.persist(user);
-        return "User created.";
+        entityManager.persist(todo);
+        return "Todo created.";
     }
 
     @Override
-    public String updateUser(User user, Integer id) {
-        if (user.getUserName() == null) {
+    public String updateTodo(Todo todo, Integer id) {
+        if (todo.getName() == null) {
             throw new WebApplicationException("Fruit Name was not set on request.", 422);
         }
 
-        User entity = entityManager.find(User.class, id);
+        Todo entity = entityManager.find(Todo.class, id);
 
         if (entity == null) {
             throw new WebApplicationException("Fruit with id of " + id + " does not exist.", 404);
         }
 
-        entity.setUserName(user.getUserName());
+        entity.setName(todo.getName());
 
         return entity + "updated";
     }
 
     @Override
-    public String deleteUser(Integer id) {
-        User entity = entityManager.getReference(User.class, id);
+    public String deleteTodo(Integer id) {
+        Todo entity = entityManager.getReference(Todo.class, id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
         }
         entityManager.remove(entity);
-        return entity + "removed";
+        return entity + "removed.";
     }
 }

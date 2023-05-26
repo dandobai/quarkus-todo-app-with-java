@@ -3,6 +3,8 @@ package org.acme.model;
 import jakarta.persistence.*;
 
 @Entity
+@NamedQuery(name = "Todos.findAll", query = "SELECT t FROM Todo t ORDER BY t.name", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
+@Cacheable
 @Table(name = "todos")
 public class Todo {
     @Id

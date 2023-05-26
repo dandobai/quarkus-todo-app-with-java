@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedQuery(name = "Users.findAll", query = "SELECT u FROM User u ORDER BY u.userName", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
+@Cacheable
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long userId;
+    Long userId;
     String userName;
     @OneToMany
     List<Todo> todos;
@@ -24,11 +26,11 @@ public class User {
         this.userName = userName;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

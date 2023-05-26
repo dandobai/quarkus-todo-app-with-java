@@ -1,77 +1,67 @@
 package org.acme.controller;
 
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.acme.model.User;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-
-import org.acme.model.Todo;
-import org.acme.service.TodoService;
+import org.acme.service.UserService;
 import org.jboss.logging.Logger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
 
-@Path("/todos/")
+@Path("/users/")
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class TodoRestController {
+public class UserRestController {
     private static final Logger LOGGER = Logger.getLogger(TodoRestController.class.getName());
 
     @Inject
-    TodoService  todoService;
+    UserService userService;
 
     @GET
     @Path("get")
     public Response get() {
-        return Response.ok(todoService.getTodos()).build();
+        return Response.ok(userService.getUsers()).build();
     }
 
     @GET
     @Path("{id}")
     public Response getSingle(Integer id) {
-        return Response.ok(todoService.getTodoById(id)).build();
+        return Response.ok(userService.getUserById(id)).build();
     }
 
     @POST
     @Transactional
-    public Response create(Todo todo) {
-        return Response.ok(todoService.createTodo(todo)).build();
+    public Response create(User user) {
+        return Response.ok(userService.createUser(user)).build();
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response update(Integer id, Todo todo) {
-        return Response.ok(todoService.updateTodo(todo,id)).status(201).build();
+    public Response update(Integer id, User user) {
+        return Response.ok(userService.updateUser(user,id)).build();
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public Response delete(Integer id) {
-        return Response.ok(todoService.deleteTodo(id)).status(204).build();
+        return Response.ok(userService.deleteUser(id)).build();
     }
-    
+
     @GET
     @Path("/hellobello")
     public Response helloBello() {
-        return Response.ok("This is the Todo controller").build();
+        return Response.ok("This is the User controller").build();
     }
 
 
