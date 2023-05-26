@@ -12,36 +12,36 @@ import java.util.List;
 
 @ApplicationScoped
 public class UserServiceImp implements UserService{
+
     @Inject
     EntityManager entityManager;
 
     @Override
-    public Response getUsers() {
-        return Response.ok(entityManager.createNamedQuery("Users.findAll", User.class)
-                .getResultList()).build();
+    public List<User> getUsers() {
+        return entityManager.createNamedQuery("Users.findAll", User.class).getResultList();
     }
 
     @Override
-    public Response getUserById(Integer id) {
+    public User getUserById(Integer id) {
         User entity = entityManager.find(User.class, id);
         if (entity == null) {
             throw new WebApplicationException("User with id of " + id + " does not exist.", 404);
         }
-        return Response.ok(entity).build();
+        return entity;
     }
 
     @Override
-    public Response createUser(User user) {
+    public String createUser(User user) {
         if (user.getUserId() != null) {
             throw new WebApplicationException("Id was invalidly set on request.", 422);
         }
 
         entityManager.persist(user);
-        return Response.ok(user).status(201).build();
+        return "User created.";
     }
 
     @Override
-    public Response updateUser(User user, Integer id) {
+    public String updateUser(User user, Integer id) {
         if (user.getUserName() == null) {
             throw new WebApplicationException("Fruit Name was not set on request.", 422);
         }
@@ -54,16 +54,16 @@ public class UserServiceImp implements UserService{
 
         entity.setUserName(user.getUserName());
 
-        return Response.ok(entity).status(201).build();
+        return entity + "updated";
     }
 
     @Override
-    public Response deleteUser(Integer id) {
+    public String deleteUser(Integer id) {
         User entity = entityManager.getReference(User.class, id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
         }
         entityManager.remove(entity);
-        return Response.status(204).build();
+        return entity + "removed";
     }
 }

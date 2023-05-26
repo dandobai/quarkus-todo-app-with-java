@@ -6,13 +6,13 @@ import org.acme.model.Todo;
 import java.util.List;
 
 public interface TodoService {
-    Response getTodos();
+    List<Todo> getTodos();
 
-    Response getTodoById(Integer id);
+    Todo getTodoById(Integer id);
 
-    Response createTodo(Todo todo);
+    String createTodo(Todo todo);
 
-    Response updateTodo(Todo todo,Integer id);
+    String updateTodo(Todo todo,Integer id);
 
-    Response deleteTodo(Integer id);
+    String deleteTodo(Integer id);
 }

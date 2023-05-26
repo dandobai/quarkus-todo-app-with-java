@@ -7,13 +7,13 @@ import org.acme.model.Todo;
 import java.util.List;
 
 public interface UserService {
-    Response getUsers();
+    List<User> getUsers();
 
-    Response getUserById(Integer id);
+    User getUserById(Integer id);
 
-    Response createUser(User user);
+    String createUser(User user);
 
-    Response updateUser(User user, Integer id);
+    String updateUser(User user, Integer id);
 
-    Response deleteUser(Integer id);
+    String deleteUser(Integer id);
 }

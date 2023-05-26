@@ -39,33 +39,33 @@ public class TodoRestController {
     @GET
     @Path("get")
     public Response get() {
-        return todoService.getTodos();
+        return Response.ok(todoService.getTodos()).build();
     }
 
     @GET
     @Path("{id}")
     public Response getSingle(Integer id) {
-        return todoService.getTodoById(id);
+        return Response.ok(todoService.getTodoById(id)).build();
     }
 
     @POST
     @Transactional
     public Response create(Todo todo) {
-        return todoService.createTodo(todo);
+        return Response.ok(todoService.createTodo(todo)).build();
     }
 
     @PUT
     @Path("{id}")
     @Transactional
     public Response update(Integer id, Todo todo) {
-        return todoService.updateTodo(todo,id);
+        return Response.ok(todoService.updateTodo(todo,id)).status(201).build();
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public Response delete(Integer id) {
-        return todoService.deleteTodo(id);
+        return Response.ok(todoService.deleteTodo(id)).status(204).build();
     }
     
     @GET

@@ -29,33 +29,33 @@ public class UserRestController {
     @GET
     @Path("get")
     public Response get() {
-        return userService.getUsers();
+        return Response.ok(userService.getUsers()).build();
     }
 
     @GET
     @Path("{id}")
     public Response getSingle(Integer id) {
-        return userService.getUserById(id);
+        return Response.ok(userService.getUserById(id)).build();
     }
 
     @POST
     @Transactional
     public Response create(User user) {
-        return userService.createUser(user);
+        return Response.ok(userService.createUser(user)).build();
     }
 
     @PUT
     @Path("{id}")
     @Transactional
     public Response update(Integer id, User user) {
-        return userService.updateUser(user,id);
+        return Response.ok(userService.updateUser(user,id)).build();
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public Response delete(Integer id) {
-        return userService.deleteUser(id);
+        return Response.ok(userService.deleteUser(id)).build();
     }
 
     @GET
